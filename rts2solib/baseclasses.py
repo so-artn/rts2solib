@@ -9,7 +9,7 @@ class Config( object ):
         rts2path = os.environ.get("RTS2SOLIBPATH")
         if rts2path is None:
             #TODO stop hardcoding directory names!
-            fname = Path( "/home/scott", '.mtnops', 'rts2_config.json')
+            fname = Path( "/home/rts2obs", '.mtnops', 'rts2_config.json')
         else:
             fname = Path( rts2path, 'rts2_config.json')
 
