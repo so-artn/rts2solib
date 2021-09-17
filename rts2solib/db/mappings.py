@@ -5,7 +5,8 @@ from sqlalchemy.orm import mapper, sessionmaker
 
 import glob
 import os
-from ..baseclasses import Config
+#from ..baseclasses import Config
+from rts2solib import Config
 import datetime
 import copy
 import pandas as pd
