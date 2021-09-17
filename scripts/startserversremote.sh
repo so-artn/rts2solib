@@ -28,6 +28,7 @@ function servers-start
 	nohup /home/scott/git-clones/ARTN_RTS2_Proj/rts2www/__init__.py > /dev/null 2>&1 & 
 
 	sleep 1
+	}
 
 function servers-stop
 	{
@@ -59,6 +60,7 @@ function servers-stop
 	fi
 
 	sleep 1
+	}
 
 function servers-restart
 	{
@@ -96,3 +98,7 @@ case $key in
     ;;
 esac
 done
+
+echo "####  START-SERVERS: RESTART CALLED ####"
+servers-restart
+sleep 1
