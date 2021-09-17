@@ -38,8 +38,7 @@ expt = numpy.append(expt, numpy.arange(5, 10, 0.5))
 expt = numpy.append(expt, numpy.arange(10, 41))
 
 f = FlatScript(
-    eveningFlats=Flat_list,
-    maxBias=1, maxDarks=0, expTimes=expt
+    eveningFlats=Flat_list,maxBias=1, maxDarks=0, expTimes=expt
 )
 
 
