@@ -96,7 +96,3 @@ case $key in
     ;;
 esac
 done
-
-echo "####  START-SERVERS: RESTART CALLED ####"
-servers-restart
-sleep 1
