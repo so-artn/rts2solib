@@ -59,11 +59,17 @@ class ShiftFocus (scriptcomm.Rts2Comm):
         try:
             focpos_int = int(focpos)
             if 2100 < focpos_int < 2900:
-                self.setValue("FOC_TAR", focpos_int, "F0")
+<<<<<<< HEAD
                 self.setValue("FOC_DEF", focpos_int, "F0")
             elif focpos_int == -999:
                 self.log("W", "Focus analysis gave bad value. Setting to Mont4k home position: 2400")
-                self.setValue("FOC_TAR", 2400, "F0")
+=======
+                #self.setValue("FOC_TAR", focpos_int, "F0")
+                self.setValue("FOC_DEF", focpos_int, "F0")
+            elif focpos_int == -999:
+                self.log("W", "Focus analysis gave bad value. Setting to Mont4k home position: 2400")
+                #self.setValue("FOC_TAR", 2400, "F0")
+>>>>>>> cc63a7c3f75afcd3788eb295f0be1ef7a40a06d0
                 self.setValue("FOC_DEF", 2400, "F0")
             else:
                 self.log("E", "Focus analysis gave erroneous focus position {}".format(focpos_int))
