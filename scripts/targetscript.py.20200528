@@ -134,9 +134,8 @@ class scripter(scriptcomm.Rts2Comm):
             total_exposures = 0
             for exp in self.script['obs_info']:
                 total_exposures += int( exp["amount"] )
-            
+
             exp_num = 0
-            self.setValue("scriptPosition", total_exposures, 'C0')
             for exp in self.script['obs_info']:
                 self.setValue("exposure", exp['exptime'] )
                 try:
@@ -144,34 +143,28 @@ class scripter(scriptcomm.Rts2Comm):
                 except ValueError:
                     repeat = 1
                 self.log('W', "repeat is {}".format(repeat))
-                self.setValue("scriptPosition", total_exposures, 'C0')
                 for ii in range(repeat):
                     if exp['Filter'].lower() == 'clear':
                         filt = 'Open'
                     else:
                         filt = exp['Filter']
-                    
-                    if filt not in self.filters:
-                        self.log("E", "filter {} not loaded on instrument".format(filt))
-                    else:
-                        self.setValue("filter",self.filters[exp['Filter']], 'W0' )
-                        self.setValue("scriptPosition", total_exposures, 'C0')
-                        exp_num+=1
-                        #self.setValue('scriptPosition', exp_num, 'C0')
-                        self.log("W", "Calling exp {} of {}".format(exp_num, total_exposures) )
-                        #imgfile = self.exposure( self.before_exposure, "/home/scott/rts2images/queue/%N/%c/%t/%f" )
-                        #imgdir = "/rts2images/queue/%N/%c/%t/%f"
-                        imgdir = "/rts2data/Kuiper/Mont4k/%N/object/%f"
-                        self.log("W", f"exp string is {imgdir}" )
-                        imgfile = self.exposure( self.before_exposure, imgdir)
-                        #imgfile = self.exposure( self.before_exposure, "/home/scott/%f" )
-                        self.log("W", "imgfile is {}".format(imgfile))
-                        path = os.path.dirname(imgfile)
-                        basename = os.path.basename(imgfile)
-                        try:
-                            to_dataserver(imgfile, basename )
-                        except Exception as err:
-                            self.log("W", "Could not send to dataserver {}".format(err))
+
+                    self.setValue("filter",self.filters[exp['Filter']], 'W0' )
+                    exp_num+=1
+                    self.log("W", "Calling exp {} of {}".format(exp_num, total_exposures) )
+                    #imgfile = self.exposure( self.before_exposure, "/home/scott/rts2images/queue/%N/%c/%t/%f" )
+                    imgdir = "/rts2images/queue/%N/%c/%t/%f"
+                    self.log("W", f"exp string is {imgdir}" )
+                    imgfile = self.exposure( self.before_exposure, imgdir)
+                    #imgfile = self.exposure( self.before_exposure, "/home/scott/%f" )
+                    self.log("W", "imgfile is {}".format(imgfile))
+                    self.log("W", "did we get here")
+                    path = os.path.dirname(imgfile)
+                    basename = os.path.basename(imgfile)
+                    try:
+                        to_dataserver(imgfile, basename )
+                    except Exception as err:
+                        self.log("W", "Could not send to dataserver {}".format(err))
 
             if not self.has_exposed:
                 self.setValue("exposure", 30 )
@@ -188,8 +181,7 @@ class scripter(scriptcomm.Rts2Comm):
             self.log("E", "there doesn't seem to be script file taking useless 30 sec exposure")
 
             self.setValue("exposure",200 )
-            # imgfile = self.exposure(self.before_exposure, "%b/queue/%N/%c/%t/%f" )
-            imgfile = self.exposure(self.before_exposure, "%b/%N/object/%f" )
+            imgfile = self.exposure(self.before_exposure, "%b/queue/%N/%c/%t/%f" )
             path = os.path.dirname(imgfile)
             basename = os.path.basename(imgfile)
             try:

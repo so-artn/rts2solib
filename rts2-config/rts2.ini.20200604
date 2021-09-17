@@ -66,41 +66,26 @@ latitude = 32.41638
 ; sexadecimals = false
 
 ; %b expansion
-base_path = "/rts2data/Kuiper/Mont4k"
+base_path = "/rts2images"
+
+; Images are stored on this path before they are processed.
+que_path = "%b/queue/%N/%c/%f"
 
 ; The following paths specify where to put images after processing. Every image is first placed
 ; in queue, and then renamed to target location based on image type, result of astrometry,..
 ;
 ; If the following paths are empty/not set, then the images will be not be renamed.
 ;
-
-; Section added by Phil Daly (pndaly@arizona.edu) 20200527
 ; Path for acqusition images
-acq_path = "%b/%N/acquisition/%f"
+acq_path = "%b/%N/acq/%f"a
 ; Path for good images - images that were matched with the catalogue
-archive_path = "%b/%N/archive/%f"
-; Path for bias
-bias_path = "%b/%N/bias/%f"
-; Path for calibration
-calibration_path = "%b/%N/calibration/%f"
-; Path for dark
-dark_path = "%b/%N/dark/%f"
-; Path for flat
-flat_path = "%b/%N/flat/%f"
-; Path for focus
-focus_path = "%b/%N/focus/%f"
-; Path for object
-object_path = "%b/%N/object/%f"
-; Images are stored on this path before they are processed.
-que_path = "%b/%N/object/%f"
-; Path for skyflat
-skyflat_path = "%b/%N/skyflat/%f"
-; Path for standard
-standard_path = "%b/%N/standard/%f"
-; Path for test
-test_path = "%b/%N/test/%f"
-; Path for trash
-trash_path = "%b/%N/trash/%f"
+archive_path = "%b/%N/archive/%t/%f"
+; Path for bad images - images without match with catalogue.
+trash_path = "%b/%N/trash/%t/%f"
+; Path for raw skyflats.
+flat_path = "%b/%N/skyflats/%f"
+; Path for raw darks
+dark_path = "%b/%N/darks/%f"
 
 ; Location with target dependent informations. Default to PREFIX "/etc/rts2/targets"
 ; target_path = "/etc/rts2"
@@ -129,7 +114,7 @@ required_devices = ""
 
 ; Sun is below horizon, when its calculated altitude is bellow that value.
 ; Default to 0 degrees.
-; day_horizon = 0
+; day_horizon = 0.
 
 ; Night starts, when sun gets below that value
 ; Default to -10 degrees.
@@ -223,7 +208,7 @@ flat_sun_max = -5
 ; Minimal linar distance in degrees for calibration targets to be considered
 ; for selection.
 ; Default to 20 degrees.
-lunar_dist = 20.0
+; lunar_dist = 20.0
 
 ; Calibration valid time. If we take at given airmass range image within last
 ; valid_time seconds, observing this target is not a high priority.
