@@ -22,7 +22,8 @@ class TestImage (scriptcomm.Rts2Comm):
             #time.sleep(0.5)
             self.setValue("SHUTTER", 0, "C0")
             self.log('I', 'Taking image')
-            img1 = self.exposure( self.before_readout, "/home/rts2obs/%f" )
+            #img1 = self.exposure( self.before_readout, "/home/rts2obs/%f" )
+            imgfile = self.exposure(self.before_exposure, "%b/%N/test/%f" )
             #self.log("I", "SENDING TO DATASERVER")
             to_dataserver(img1, "test.fits")
         except Exception as err:

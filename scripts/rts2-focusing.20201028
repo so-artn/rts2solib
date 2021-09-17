@@ -31,10 +31,15 @@ class ShiftFocus (scriptcomm.Rts2Comm):
             self.setValue("FOC_DEF", 2000, self.focuser)
             time.sleep(5.0)
             self.log('I', 'Taking image')
-            img1 = self.exposure( self.before_readout, "/rts2data/Kuiper/Mont4k/%N/focus/%f" )
+            self.log('I', '... about to take image')
+            # img1 = self.exposure( self.before_readout, "%b/queue/%N/%c/focus/%f" )
+            img1 = self.exposure( self.before_readout, "%b/%N/focus/%f" )
             self.setValue("FOC_DEF", 3000, self.focuser)
             time.sleep(5.0)
-            img2 = self.exposure( None, "/rts2data/Kuiper/Mont4k/%N/focus/%f" )
+            self.log("I", "SENDING TO DATASERVER")
+            to_dataserver(img1, "focus1.fits")
+            img2 = self.exposure(None, "%b/queue/%N/%c/focus/%f" )
+            to_dataserver(img2, "focus2.fits")
         except Exception as err:
             self.log("I", "err is {} ".format(err))
 
@@ -42,17 +47,17 @@ class ShiftFocus (scriptcomm.Rts2Comm):
         focus_script = "/home/rts2obs/conda/te_pickering/ARTNfocus/scripts/mont4k_focus.py"
         intra = img1
         extra = img2
+#        intra = "/home/rts2obs/data/foci/focus1.fits"
+#        extra = "/home/rts2obs/data/foci/focus2.fits"
         outputfile = "/tmp/focus.out"
 
         cmd = "{} {} -i {} -e {} -f {}"
         args = shlex.split(cmd.format(exer, focus_script, intra, extra, outputfile))
         self.log("I", "Running focus analysis.")
         resp=subprocess.check_output(args).decode()
+        for line in resp.split('\n'):
+            self.log("I", line)
 
-        #for line in resp.split('\n'):
-        #    self.log("I", line)
-
-        
         with open(outputfile) as focusdat:
             focpos = focusdat.read()
 
@@ -61,10 +66,6 @@ class ShiftFocus (scriptcomm.Rts2Comm):
             if 2100 < focpos_int < 2900:
                 self.setValue("FOC_TAR", focpos_int, "F0")
                 self.setValue("FOC_DEF", focpos_int, "F0")
-            elif focpos_int == -999:
-                self.log("W", "Focus analysis gave bad value. Setting to Mont4k home position: 2400")
-                self.setValue("FOC_TAR", 2400, "F0")
-                self.setValue("FOC_DEF", 2400, "F0")
             else:
                 self.log("E", "Focus analysis gave erroneous focus position {}".format(focpos_int))
 
