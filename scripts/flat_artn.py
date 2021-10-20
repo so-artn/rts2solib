@@ -12,7 +12,7 @@ import json
 import numpy
 import sys
 
-sys.path.append('/home/mtnops/src/git-clones/support-lib-rts2')
+sys.path.append('/home/rts2obs/git-clones/rts2solib')
 from rts2solib import flats 
 from rts2solib.big61filters import filter_set
 from telescope import kuiper

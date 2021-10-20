@@ -8,7 +8,7 @@ from scottSock import scottSock
 import sys
 import os
 import time
-from rts2solib import to_dataserver
+#from rts2solib import to_dataserver
 
 class TestImage (scriptcomm.Rts2Comm):
     """Take and process focussing data."""
@@ -22,10 +22,10 @@ class TestImage (scriptcomm.Rts2Comm):
             #time.sleep(0.5)
             self.setValue("SHUTTER", 0, "C0")
             self.log('I', 'Taking image')
-            #img1 = self.exposure( self.before_readout, "/home/rts2obs/%f" )
-            imgfile = self.exposure(self.before_exposure, "%b/%N/test/%f" )
+            img1 = self.exposure( self.before_readout, "/home/rts2obs/%f" )
+            #imgfile = self.exposure(self.before_exposure, "%b/%N/test/%f" )
             #self.log("I", "SENDING TO DATASERVER")
-            to_dataserver(img1, "test.fits")
+            #to_dataserver(img1, "test.fits")
         except Exception as err:
             
             self.log("I", "err is {} ".format(err))

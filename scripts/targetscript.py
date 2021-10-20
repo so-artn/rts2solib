@@ -7,7 +7,7 @@ from rts2solib import scriptcomm
 
 from rts2solib.big61filters import filter_set
 from rts2solib import Config
-from rts2solib import to_dataserver
+#from rts2solib import to_dataserver
 import requests
 import os
 from sqlalchemy import create_engine, MetaData
@@ -51,6 +51,7 @@ class scripter(scriptcomm.Rts2Comm):
 #            self.script = None
         self.log("W", "looking at target {}".format(targetid))
         name = self.getValue("current_name", "EXEC")
+        print('using name {}'.format(name))
 
 
         # remove the first 4 bits that make the name
@@ -168,20 +169,24 @@ class scripter(scriptcomm.Rts2Comm):
                         self.log("W", "imgfile is {}".format(imgfile))
                         path = os.path.dirname(imgfile)
                         basename = os.path.basename(imgfile)
+                        """
                         try:
                             to_dataserver(imgfile, basename )
                         except Exception as err:
                             self.log("W", "Could not send to dataserver {}".format(err))
+                        """
 
             if not self.has_exposed:
                 self.setValue("exposure", 30 )
                 imgfile = self.exposure(self.before_exposure)
                 path = os.path.dirname(imgfile)
                 basename = os.path.basename(imgfile)
+                """
                 try:
                     to_dataserver(imgfile, basename )
                 except Exception as err:
                     self.log("W", "Could not send to dataserver {}".format(err))
+                """
 
 
         else:
@@ -192,10 +197,12 @@ class scripter(scriptcomm.Rts2Comm):
             imgfile = self.exposure(self.before_exposure, "%b/%N/object/%f" )
             path = os.path.dirname(imgfile)
             basename = os.path.basename(imgfile)
+            """
             try:
                 to_dataserver(imgfile, basename )
             except Exception as err:
                 self.log("W", "Could not send to dataserver {}".format(err))
+            """
 
 
 
