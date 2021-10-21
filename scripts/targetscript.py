@@ -58,7 +58,7 @@ class scripter(scriptcomm.Rts2Comm):
         # unique and write that to objectName.
         self.setValue( "objectName", name[4:] )
 
-
+        self.log('W', self.cfg["orp_dbpath"])
         engine = create_engine( self.cfg["orp_dbpath"] )
         meta = MetaData()
         meta.reflect(bind=engine)
