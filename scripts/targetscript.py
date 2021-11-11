@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/home/rts2obs/anaconda3/bin/python3 
 
 #import rts2
 import json
@@ -31,7 +31,6 @@ class scripter(scriptcomm.Rts2Comm):
         scriptcomm.Rts2Comm.__init__(self)
         self.cfg = Config()
         self.filters = filter_set()
-
         self.log("W", "looking at fake target {}".format(faketarget))
         if faketarget is not None:
             self.log("W", "looking at fake target {}".format(faketarget))
@@ -52,7 +51,6 @@ class scripter(scriptcomm.Rts2Comm):
         self.log("W", "looking at target {}".format(targetid))
         name = self.getValue("current_name", "EXEC")
         print('using name {}'.format(name))
-
 
         # remove the first 4 bits that make the name
         # unique and write that to objectName.
@@ -126,6 +124,7 @@ class scripter(scriptcomm.Rts2Comm):
 
 
     def run( self ):
+        print(self.filters)
         if self.script is not None:
             self.setValue("SHUTTER", 0, "C0")
             self.log("I", "running target {name} at {ra} {dec}".format( **self.script  ) )
@@ -148,14 +147,14 @@ class scripter(scriptcomm.Rts2Comm):
                 self.setValue("scriptPosition", total_exposures, 'C0')
                 for ii in range(repeat):
                     if exp['Filter'].lower() == 'clear':
-                        filt = 'Open'
+                        filt = 'OPEN'
                     else:
                         filt = exp['Filter']
                     
-                    if filt not in self.filters:
+                    if not any([ff == filt for ff in self.filters]):
                         self.log("E", "filter {} not loaded on instrument".format(filt))
                     else:
-                        self.setValue("filter",self.filters[exp['Filter']], 'W0' )
+                        self.setValue("filter",filt, 'W0' )
                         self.setValue("scriptPosition", total_exposures, 'C0')
                         exp_num+=1
                         #self.setValue('scriptPosition', exp_num, 'C0')

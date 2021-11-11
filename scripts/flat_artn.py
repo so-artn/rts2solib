@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/home/rts2obs/anaconda3/bin/python3 
 
 # Example configuation of flats.
 # (C) 2010 Petr Kubanek
@@ -12,7 +12,6 @@ import json
 import numpy
 import sys
 
-sys.path.append('/home/rts2obs/git-clones/rts2solib')
 from rts2solib import flats 
 from rts2solib.big61filters import filter_set
 from telescope import kuiper

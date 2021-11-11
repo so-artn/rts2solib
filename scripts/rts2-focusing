@@ -1,13 +1,8 @@
-#!/usr/bin/python3 -W ignore
-#!/home/rts2obs/miniconda3/bin/python3 -W ignore
-
-
-#from __future__ import print_function
-#!/home/rts2obs/miniconda3/bin/python -W ignore
+#!/home/rts2obs/anaconda3/bin/python3 
 
 #from rts2 import scriptcomm
 
-from rts2solib import scriptcomm, to_dataserver
+from rts2solib import scriptcomm
 from astropy.io import fits
 from scottSock import scottSock
 import sys
