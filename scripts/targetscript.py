@@ -145,16 +145,22 @@ class scripter(scriptcomm.Rts2Comm):
                     repeat = 1
                 self.log('W', "repeat is {}".format(repeat))
                 self.setValue("scriptPosition", total_exposures, 'C0')
+                self.log('W', 'Available Filters')
+                for ff in self.filters:
+                    self.log('W', ff)
                 for ii in range(repeat):
                     if exp['Filter'].lower() == 'clear':
                         filt = 'OPEN'
                     else:
                         filt = exp['Filter']
-                    
-                    if not any([ff == filt for ff in self.filters]):
+
+                    filtname = self.filters.check_alias(filt)
+
+                    if filtname is None:
+                    #if not any([ff == filt for ff in self.filters]):
                         self.log("E", "filter {} not loaded on instrument".format(filt))
                     else:
-                        self.setValue("filter",filt, 'W0' )
+                        self.setValue("filter",filtname, 'W0' )
                         self.setValue("scriptPosition", total_exposures, 'C0')
                         exp_num+=1
                         #self.setValue('scriptPosition', exp_num, 'C0')
