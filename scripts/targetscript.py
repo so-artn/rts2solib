@@ -60,7 +60,7 @@ class scripter(scriptcomm.Rts2Comm):
         engine = create_engine( self.cfg["orp_dbpath"] )
         meta = MetaData()
         meta.reflect(bind=engine)
-        obsreqs = meta.tables["obsreqs"]
+        obsreqs = meta.tables["obsreq2"]
         session = sessionmaker(bind=engine)()
         try:
             db_resp = session.query(obsreqs).filter(obsreqs.columns["rts2_id"]==targetid)
@@ -69,7 +69,7 @@ class scripter(scriptcomm.Rts2Comm):
             self.log("E", "Could not find target-- {}".format(targetid))
             raise
         self.setValue('ObservationID', db_resp[0].observation_id, "C0")
-        self.setValue('GroupID', db_resp[0].group_id, "C0")
+        #self.setValue('GroupID', db_resp[0].group_id, "C0")
 
         
         binning = db_resp[0].binning
