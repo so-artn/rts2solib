@@ -56,7 +56,6 @@ class scripter(scriptcomm.Rts2Comm):
         # unique and write that to objectName.
         self.setValue( "objectName", name[4:] )
 
-        self.log('W', self.cfg["orp_dbpath"])
         engine = create_engine( self.cfg["orp_dbpath"] )
         meta = MetaData()
         meta.reflect(bind=engine)
@@ -69,9 +68,7 @@ class scripter(scriptcomm.Rts2Comm):
             self.log("E", "Could not find target-- {}".format(targetid))
             raise
         self.setValue('ObservationID', db_resp[0].observation_id, "C0")
-        #self.setValue('GroupID', db_resp[0].group_id, "C0")
 
-        
         binning = db_resp[0].binning
         if binning in ("4x4", "3x3", "2x2", "1x1"):
             if binning == "1x1":
@@ -145,9 +142,6 @@ class scripter(scriptcomm.Rts2Comm):
                     repeat = 1
                 self.log('W', "repeat is {}".format(repeat))
                 self.setValue("scriptPosition", total_exposures, 'C0')
-                self.log('W', 'Available Filters')
-                for ff in self.filters:
-                    self.log('W', ff)
                 for ii in range(repeat):
                     if exp['Filter'].lower() == 'clear':
                         filt = 'OPEN'

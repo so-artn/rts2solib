@@ -2,6 +2,7 @@
 
 #from rts2 import scriptcomm
 
+from rts2solib.big61filters import filter_set
 from rts2solib import scriptcomm
 from astropy.io import fits
 from scottSock import scottSock
@@ -18,8 +19,11 @@ class ShiftFocus (scriptcomm.Rts2Comm):
     def __init__( self ):
         scriptcomm.Rts2Comm.__init__( self )
         self.focuser = "F0"
+        self.filters = filter_set()
 
     def shift_focus( self ):
+        filtname = self.filters.check_alias('V')
+        self.setValue("filter",filtname, 'W0' )
         self.setValue("exposure", 30) # set exp time to 90 secs
         self.setValue("SHUTTER", 0, "C0")
         try:
