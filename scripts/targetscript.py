@@ -55,7 +55,6 @@ class scripter(scriptcomm.Rts2Comm):
         # remove the first 4 bits that make the name
         # unique and write that to objectName.
         self.setValue( "objectName", name[4:] )
-
         engine = create_engine( self.cfg["orp_dbpath"] )
         meta = MetaData()
         meta.reflect(bind=engine)

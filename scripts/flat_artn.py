@@ -11,6 +11,7 @@
 import json
 import numpy
 import sys
+import datetime
 
 from rts2solib import flats 
 from rts2solib.big61filters import filter_set
@@ -20,10 +21,13 @@ k = kuiper()
 Filters = filter_set()
 Flat, FlatScript = flats.Flat, flats.FlatScript
 
+now = datetime.datetime.now()
+ordered_filters = Filters.filter_flat_order(evening=now.hour > 12 and now.hour < 24)
+
 Flat_list = []
 binnings = [3, 4]
 
-for f in Filters:
+for f in ordered_filters:
     if str(f).lower() != 'open':# and str(f).lower() != 'bessell-u':
         for b in binnings:
             Flat_list.append(Flat((f,), binning=b, window='100 100 500 500'))
