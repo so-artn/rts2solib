@@ -48,7 +48,7 @@ class bias_scripter(scriptcomm.Rts2Comm):
     def __init__(self):
         scriptcomm.Rts2Comm.__init__(self)
         self.cfg = Config()
-        self.binnings = [1,2,3,4]
+        self.binnings = [3,4]
         self.bias_dictionary = {}
 
     def run(self): 
