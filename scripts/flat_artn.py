@@ -12,8 +12,7 @@ import json
 import numpy
 import sys
 import datetime
-
-from rts2solib import flats 
+from rts2solib import flats #This is rts2solib/flat_v3.py (look in __init__.py for clarification)
 from rts2solib.big61filters import filter_set
 from telescope import kuiper
 
@@ -24,13 +23,14 @@ Flat, FlatScript = flats.Flat, flats.FlatScript
 now = datetime.datetime.now()
 ordered_filters = Filters.filter_flat_order(evening=now.hour > 12 and now.hour < 24)
 
+ordered_filters = ['OPEN']
+
 Flat_list = []
 binnings = [3, 4]
 
 for f in ordered_filters:
-    if str(f).lower() != 'open':# and str(f).lower() != 'bessell-u':
-        for b in binnings:
-            Flat_list.append(Flat((f,), binning=b, window='100 100 500 500'))
+    for b in binnings:
+        Flat_list.append(Flat((f,), binning=b, window='100 100 500 500'))
 
 # You would at least like to specify filter order, if not binning and
 # other thingsa

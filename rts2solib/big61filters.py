@@ -30,7 +30,7 @@ class filter_set:
             "Arizona-I": ("I",), 
             "Harris-B": ("B",),
             "Schott-8612": ("Schott",),
-            "Open": ("Open", "open", "OPEN", "Clear", "CLEAR", "clear"),
+            "OPEN": ("Open", "open", "OPEN", "Clear", "CLEAR", "clear"),
             "Halpha": ("Halpha", "halpha")}
 
 
@@ -67,17 +67,44 @@ class filter_set:
     def check_alias( self, alias ):
 
         for name, aliases in self.alias.items():
-            if alias == name:
-                return alias
+            if alias == name and name in self._filter_list:
+                return name
 
             else:
                 for al in aliases:
-                    if al == alias:
+                    if al == alias and name in self._filter_list:
                         return name
 
         # we didn't find the alias
         return None
-            
+
+    def filter_flat_order(self, evening=True):
+        loaded_filters = self._filter_list
+        
+        loaded_filters_true = [self.check_alias(lf) for lf in loaded_filters]
+
+        filter_priority = {
+            "Halpha":1,
+            "Bessell-U":2,
+            "Harris-B":3,
+            "Harris-V":4,
+            "Harris-R":5,
+            "Arizona-I":6,
+            "Schott-8612":7,
+            "Open":8
+        }
+
+        filter_priority = dict(sorted(filter_priority.items(), key=lambda item: item[1], reverse=(not evening)))
+
+        sorted_filters = []
+
+        for filt in filter_priority.keys():
+            temp = self.check_alias(filt)
+            if temp is not None and temp in loaded_filters_true:
+                sorted_filters.append(temp)
+
+        return sorted_filters
+
     def __str__(self):
         return "<filter_set: "+str(self._filter_list)+">"
 

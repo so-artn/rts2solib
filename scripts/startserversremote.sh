@@ -28,6 +28,18 @@ function servers-start
 	nohup /home/scott/git-clones/ARTN_RTS2_Proj/rts2www/__init__.py > /dev/null 2>&1 & 
 
 	sleep 1
+
+	# start the azcam monitor
+	#if [ "`ping -c 1 10.30.1.10`" ]
+	#then
+	#		  echo azcam comnputer  is alive.  starting monitor
+	#		  	sshpass -p "azcam" ssh azcam@10.30.1.10 "python c:\azcam\azcam-monitor\azcam_monitor\azcammonitor.py -configfile "/azcam/azcam-mont4k/bin/parameters_mont4k_monitor.ini"" &
+	#			  else
+	#				  	    echo azcam computer is dead
+	#fi
+
+
+
 	}
 
 function servers-stop
@@ -60,6 +72,9 @@ function servers-stop
 	fi
 
 	sleep 1
+	#stop the azcam monitor
+	#pkill -f "sshpass -p zzzzz ssh azcam@10.30.1.10"
+	#sleep 1
 	}
 
 function servers-restart

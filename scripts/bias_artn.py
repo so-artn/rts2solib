@@ -60,8 +60,11 @@ class bias_scripter(scriptcomm.Rts2Comm):
                 self.setValue('exposure', 0)
                 self.setValue('binning',b)
                 imgdir = "/rts2data/Kuiper/Mont4k/%N/dark/%f"
-                filename = self.exposure(None, imgdir)
-                self.bias_dictionary[str(b)].append(filename)
+                try:
+                    filename = self.exposure(None, imgdir)
+                    self.bias_dictionary[str(b)].append(filename)
+                except:
+                    self.log('E', 'Error in bias_artn.py when calling zero exposure to C0')
 
     def create_master_bias(self):
         for b in self.binnings:

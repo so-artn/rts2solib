@@ -685,6 +685,7 @@ class FlatScript(scriptcomm.Rts2Comm):
             'I', 'flat scripts finished, waiting for change of next target')
         self.setValue('SHUTTER', 'LIGHT')
         while True:
+            self.log('I', 'WHILE TRUE....')
             sun_alt = self.getValueFloat('sun_alt', 'centrald')
             next_t = self.getValueInteger('next', 'EXEC')
             if sun_alt >= 0.5 or not (next_t == 2 or next_t == -1):
